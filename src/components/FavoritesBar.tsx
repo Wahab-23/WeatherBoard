@@ -40,11 +40,10 @@ export const FavoritesBar: React.FC<FavoritesBarProps> = ({
             return (
               <div
                 key={city.id}
-                className={`group flex items-center rounded-lg border text-xs font-medium transition-all ${
-                  isSelected
-                    ? 'border-neutral-900 bg-neutral-900 text-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50'
-                    : 'border-neutral-200/80 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/70 dark:text-neutral-300 dark:hover:border-neutral-700'
-                }`}
+                className={`group flex items-center rounded-lg border text-xs font-medium transition-all ${isSelected
+                  ? 'border-neutral-900 bg-neutral-900 text-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50'
+                  : 'border-neutral-200/80 bg-white text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/70 dark:text-neutral-300 dark:hover:border-neutral-700'
+                  }`}
               >
                 <button
                   type="button"
@@ -53,7 +52,7 @@ export const FavoritesBar: React.FC<FavoritesBarProps> = ({
                   aria-label={`Select ${city.name}, ${city.country}`}
                 >
                   <MapPin className={`h-3 w-3 ${isSelected ? 'text-cyan-400' : 'text-neutral-400'}`} />
-                  <span className="truncate max-w-[110px]">{city.name}</span>
+                  <span className="truncate max-w-27.5">{city.name}</span>
                   <span className={`text-[10px] ${isSelected ? 'text-neutral-300' : 'text-neutral-400'}`}>
                     {city.countryCode}
                   </span>
@@ -66,9 +65,8 @@ export const FavoritesBar: React.FC<FavoritesBarProps> = ({
                     e.stopPropagation();
                     onRequestRemove(city);
                   }}
-                  className={`touch-target rounded-r-lg px-2 text-neutral-400 hover:text-rose-500 focus:outline-none ${
-                    isSelected ? 'hover:bg-neutral-800 text-neutral-300' : 'hover:bg-neutral-100'
-                  }`}
+                  className={`touch-target rounded-r-lg px-2 text-neutral-400 hover:text-rose-500 inline-flex justify-center focus:outline-none ${isSelected ? 'hover:bg-neutral-800 text-neutral-300' : 'hover:bg-neutral-100'
+                    }`}
                   aria-label={`Remove ${city.name} from pinned locations`}
                   title="Remove from pinned"
                 >
@@ -83,7 +81,7 @@ export const FavoritesBar: React.FC<FavoritesBarProps> = ({
             <button
               type="button"
               onClick={onOpenSearch}
-              className="touch-target inline-flex items-center gap-1 rounded-lg border border-dashed border-neutral-300 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-neutral-200"
+              className="h-11 inline-flex items-center gap-1 rounded-lg border border-dashed border-neutral-300 px-3 py-1.5 text-xs text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-600 dark:hover:text-neutral-200"
               title="Pin a new city"
             >
               <Plus className="h-3 w-3" />

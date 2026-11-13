@@ -151,7 +151,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       onCancel={handleCancel}
       onClick={handleBackdropClick}
       aria-labelledby="search-dialog-title"
-      className="m-auto w-full max-w-lg rounded-2xl border border-neutral-200 bg-white p-0 shadow-2xl backdrop:bg-black/60 dark:border-neutral-800 dark:bg-[#0c0e14] dark:text-neutral-100 overflow-hidden"
+      className="m-auto w-fit max-w-lg rounded-2xl border border-neutral-200 bg-white p-0 shadow-2xl backdrop:bg-black/60 dark:border-neutral-800 dark:bg-[#0c0e14] dark:text-neutral-100 overflow-hidden"
     >
       {/* Search Header Form */}
       <form onSubmit={handleSubmit} className="relative border-b border-neutral-200/80 p-4 dark:border-neutral-800">
@@ -182,7 +182,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="touch-target rounded-lg p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+              className="touch-target rounded-lg inline-flex justify-center p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
               aria-label="Close search"
             >
               <X className="h-4 w-4" />
@@ -201,7 +201,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
       {/* Suggestion & Results Container */}
       <div id="city-suggestions-list" className="max-h-80 overflow-y-auto p-2 scrollbar-none">
-        
+
         {/* Loading State */}
         {isLoading && results.length === 0 && (
           <div className="space-y-2 p-3">
@@ -258,11 +258,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     type="button"
                     onClick={() => handleSelect(city)}
                     onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`touch-target w-full rounded-xl px-3 py-2.5 text-left transition-colors flex items-center justify-between ${
-                      isHighlighted
-                        ? 'bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-50'
-                        : 'text-neutral-700 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-900/50'
-                    }`}
+                    className={`justify-between touch-target w-full rounded-xl px-3 py-2.5 text-left transition-colors flex items-center ${isHighlighted
+                      ? 'bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-50'
+                      : 'text-neutral-700 hover:bg-neutral-50 dark:text-neutral-300 dark:hover:bg-neutral-900/50'
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">

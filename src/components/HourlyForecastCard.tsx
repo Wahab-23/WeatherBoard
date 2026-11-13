@@ -59,11 +59,11 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
           ref={scrollRef}
           className={[
             /* shared */
-            'overflow-x-auto px-5 pb-5 pt-1 scrollbar-none',
+            'overflow-x-auto px-5 pb-5 pt-5 ml-2 scrollbar-none',
             /* mobile: single flex row + snap */
             'flex gap-2.5 scroll-smooth snap-x snap-mandatory',
             /* tablet+: 2-row CSS grid, column flow */
-            'sm:grid sm:grid-rows-2 sm:[grid-auto-flow:column] sm:gap-2 sm:snap-none',
+            'sm:grid sm:grid-rows-2 sm:grid-flow-col sm:gap-2 sm:snap-none',
           ].join(' ')}
           style={{ WebkitOverflowScrolling: 'touch' }}
         >
@@ -79,12 +79,12 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
                   /* Base — mobile: snap item, fixed width */
                   'relative flex shrink-0 snap-start flex-col items-center',
                   /* Width: wider on larger screens; on tablet+ auto-cols fills space */
-                  'w-[72px] sm:w-auto sm:min-w-[72px]',
+                  'w-18 sm:w-auto sm:min-w-18',
                   'rounded-2xl px-2 py-3 sm:py-3.5',
                   'transition-all duration-200',
                   /* "Now" card accent */
                   isNow
-                    ? 'border border-cyan-400/50 bg-gradient-to-b from-cyan-500/15 to-cyan-500/5 shadow-sm shadow-cyan-500/10 dark:border-cyan-500/40 dark:from-cyan-500/20 dark:to-cyan-500/8'
+                    ? 'border border-cyan-400/50 bg-linear-to-b from-cyan-500/15 to-cyan-500/5 shadow-sm shadow-cyan-500/10 dark:border-cyan-500/40 dark:from-cyan-500/20 dark:to-cyan-500/8'
                     : 'border border-neutral-200/60 bg-neutral-50/60 dark:border-neutral-800/50 dark:bg-neutral-800/25',
                 ].join(' ')}
               >

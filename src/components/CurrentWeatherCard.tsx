@@ -28,7 +28,7 @@ export const CurrentWeatherCard: React.FC<CurrentWeatherCardProps> = ({
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-neutral-200/90 bg-white/70 p-6 sm:p-8 backdrop-blur-xl shadow-xs transition-all dark:border-neutral-800/80 dark:bg-neutral-900/50">
-      
+
       {/* Background subtle atmospheric gradient glow */}
       <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl dark:bg-cyan-500/15" />
       <div className="pointer-events-none absolute -left-16 -bottom-16 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl dark:bg-indigo-500/15" />
@@ -57,11 +57,10 @@ export const CurrentWeatherCard: React.FC<CurrentWeatherCardProps> = ({
           <button
             type="button"
             onClick={onToggleFavorite}
-            className={`touch-target rounded-xl border p-2.5 transition active:scale-95 ${
-              isFavorite
-                ? 'border-amber-400/50 bg-amber-500/10 text-amber-500 dark:border-amber-400/30'
-                : 'border-neutral-200 bg-white text-neutral-400 hover:text-neutral-600 dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
-            }`}
+            className={`touch-target rounded-xl border p-2.5 transition active:scale-95 justify-center inline-flex ${isFavorite
+              ? 'border-amber-400/50 bg-amber-500/10 text-amber-500 dark:border-amber-400/30'
+              : 'border-neutral-200 bg-white text-neutral-400 hover:text-neutral-600 dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
+              }`}
             title={isFavorite ? 'Remove from pinned locations' : 'Pin to favorites (max 5)'}
             aria-label={isFavorite ? 'Remove from pinned locations' : 'Pin to favorites'}
           >
@@ -73,7 +72,7 @@ export const CurrentWeatherCard: React.FC<CurrentWeatherCardProps> = ({
             type="button"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="touch-target rounded-xl border border-neutral-200 bg-white p-2.5 text-neutral-600 transition hover:bg-neutral-50 active:scale-95 dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 disabled:opacity-50"
+            className="touch-target justify-center inline-flex rounded-xl border border-neutral-200 bg-white p-2.5 text-neutral-600 transition hover:bg-neutral-50 active:scale-95 dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 disabled:opacity-50"
             title="Refresh current meteorological reading"
             aria-label="Refresh current weather data"
           >

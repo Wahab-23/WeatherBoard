@@ -14,7 +14,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   suggestedCities,
 }) => {
   return (
-    <div className="flex min-h-[500px] flex-col items-center justify-center rounded-3xl border border-dashed border-neutral-300/80 bg-white/40 p-8 text-center backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/20">
+    <div className="flex min-h-125 flex-col items-center justify-center rounded-3xl border border-dashed border-neutral-300/80 bg-white/40 p-8 text-center backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/20">
       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-neutral-100 text-cyan-600 shadow-inner dark:bg-neutral-800 dark:text-cyan-400">
         <CloudSun className="h-8 w-8" />
       </div>

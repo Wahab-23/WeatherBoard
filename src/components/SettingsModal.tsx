@@ -119,7 +119,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       onCancel={handleCancel}
       onClick={handleBackdropClick}
       aria-labelledby="settings-dialog-title"
-      className="m-auto w-full max-w-lg rounded-2xl border border-neutral-200 bg-white p-0 shadow-2xl backdrop:bg-black/60 dark:border-neutral-800 dark:bg-[#0c0e14] dark:text-neutral-100 overflow-hidden"
+      className="m-auto w-fit max-w-lg rounded-2xl border border-neutral-200 bg-white p-0 shadow-2xl backdrop:bg-black/60 dark:border-neutral-800 dark:bg-[#0c0e14] dark:text-neutral-100 overflow-hidden"
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-neutral-200/80 px-6 py-4 dark:border-neutral-800">
@@ -129,7 +129,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         <button
           type="button"
           onClick={onClose}
-          className="touch-target rounded-lg p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+          className="touch-target inline-flex justify-center rounded-lg p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
           aria-label="Close settings"
         >
           <X className="h-4 w-4" />
@@ -137,7 +137,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       </div>
 
       <div className="max-h-[75vh] overflow-y-auto p-6 space-y-6 scrollbar-none">
-        
+
         {/* Section 1: Units & Theme */}
         <section aria-labelledby="display-prefs-heading">
           <h3 id="display-prefs-heading" className="text-xs font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-3">
@@ -154,22 +154,20 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onSetUnit('C')}
-                  className={`touch-target flex-1 rounded-md text-xs font-medium transition ${
-                    unit === 'C'
-                      ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
-                      : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
-                  }`}
+                  className={`touch-target flex-1 rounded-md text-xs font-medium transition justify-center ${unit === 'C'
+                    ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
+                    : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                    }`}
                 >
                   Celsius (°C)
                 </button>
                 <button
                   type="button"
                   onClick={() => onSetUnit('F')}
-                  className={`touch-target flex-1 rounded-md text-xs font-medium transition ${
-                    unit === 'F'
-                      ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
-                      : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
-                  }`}
+                  className={`touch-target flex-1 rounded-md text-xs font-medium transition justify-center ${unit === 'F'
+                    ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
+                    : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                    }`}
                 >
                   Fahrenheit (°F)
                 </button>
@@ -185,11 +183,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onSetTheme('light')}
-                  className={`touch-target flex-1 rounded-md text-xs font-medium transition flex items-center justify-center gap-1 ${
-                    theme === 'light'
-                      ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
-                      : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
-                  }`}
+                  className={`touch-target flex-1 rounded-md text-xs font-medium transition flex items-center justify-center gap-1 ${theme === 'light'
+                    ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
+                    : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                    }`}
                 >
                   <Sun className="h-3 w-3" />
                   <span>Light</span>
@@ -197,11 +194,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onSetTheme('dark')}
-                  className={`touch-target flex-1 rounded-md text-xs font-medium transition flex items-center justify-center gap-1 ${
-                    theme === 'dark'
-                      ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
-                      : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
-                  }`}
+                  className={`touch-target flex-1 rounded-md text-xs font-medium transition flex items-center justify-center gap-1 ${theme === 'dark'
+                    ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
+                    : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                    }`}
                 >
                   <Moon className="h-3 w-3" />
                   <span>Dark</span>
@@ -209,11 +205,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onSetTheme('system')}
-                  className={`touch-target flex-1 rounded-md text-xs font-medium transition flex items-center justify-center gap-1 ${
-                    theme === 'system'
-                      ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
-                      : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
-                  }`}
+                  className={`touch-target flex-1 rounded-md text-xs font-medium transition flex items-center justify-center gap-1 ${theme === 'system'
+                    ? 'bg-white text-neutral-900 shadow-xs dark:bg-neutral-700 dark:text-white'
+                    : 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                    }`}
                 >
                   <Laptop className="h-3 w-3" />
                   <span>Auto</span>

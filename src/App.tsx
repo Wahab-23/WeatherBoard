@@ -128,7 +128,7 @@ export function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900 transition-colors dark:bg-[#090b10] dark:text-neutral-100">
-      
+
       {/* Header Bar */}
       <Header
         unit={unit}
@@ -162,7 +162,7 @@ export function App() {
 
       {/* Main Responsive Shell Container */}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
-        
+
         {/* Error notification if live load fails and no cached data exists */}
         {error && !weather && (
           <div className="mb-6 rounded-2xl border border-rose-500/20 bg-rose-50/70 p-4 text-xs text-rose-900 dark:border-rose-500/20 dark:bg-rose-950/30 dark:text-rose-200">
@@ -192,7 +192,7 @@ export function App() {
           />
         ) : weather ? (
           <div className="space-y-6">
-            
+
             {/* Hero Current Weather */}
             <CurrentWeatherCard
               weather={weather}
@@ -223,13 +223,13 @@ export function App() {
       {/* Footer */}
       <footer className="mt-auto border-t border-neutral-200/60 bg-white/40 py-6 text-center text-xs text-neutral-400 dark:border-neutral-800/60 dark:bg-neutral-900/20 dark:text-neutral-500">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <p className="font-mono text-[11px]">
-            WeatherBoard Precision Meteorological Dashboard &copy; 2026
+          <p className="font-mono text-[11px] w-full justify-center md:justify-start md:w-fit">
+            WeatherBoard &copy; 2026
           </p>
-          <div className="flex items-center gap-4 text-[11px]">
+          <div className="flex w-full justify-center items-center gap-1 md:gap-4 text-[11px] md:justify-start md:w-fit">
             <span>Vite + React + TypeScript + PWA</span>
-            <span>•</span>
-            <span>OpenWeatherMap &rarr; Open-Meteo Engine</span>
+            <span className='hidden md:block'>•</span>
+            <span className='hidden md:block'>OpenWeatherMap &rarr; Open-Meteo Engine</span>
           </div>
         </div>
       </footer>

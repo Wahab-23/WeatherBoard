@@ -44,7 +44,7 @@ export const SkeletonLoader: React.FC = () => {
         <div className="h-5 w-48 rounded bg-neutral-200/70 dark:bg-neutral-800 mb-4" />
         <div className="flex gap-3 overflow-hidden">
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
-            <div key={i} className="min-w-[80px] h-28 rounded-2xl bg-neutral-200/40 dark:bg-neutral-800/30" />
+            <div key={i} className="min-w-20 h-28 rounded-2xl bg-neutral-200/40 dark:bg-neutral-800/30" />
           ))}
         </div>
       </div>
