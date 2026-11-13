@@ -178,10 +178,3 @@ WeatherBoard/
 ├── tsconfig.json                   # TypeScript configuration
 └── vite.config.ts                  # Vite + React + Tailwind + PWA configuration
 ```
-
----
-
-## Submission Details
-- **Email Target:** `jobs@edspire.app`
-- **Email Subject:** `WeatherBoard - Frontend Challenge Submission`
-- **Candidate Submission Link:** Included in submission email.
