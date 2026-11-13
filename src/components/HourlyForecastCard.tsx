@@ -1,5 +1,5 @@
-import React from 'react';
-import { Clock, Droplets } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Droplets } from 'lucide-react';
 import type { HourlyForecast, TempUnit } from '../types';
 import { getWeatherIcon } from '../utils/weatherIcons';
 
@@ -9,51 +9,141 @@ interface HourlyForecastCardProps {
 }
 
 export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, unit }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  /* Find the temperature range to draw the relative warmth bar */
+  const temps = hourly.map(h => (unit === 'C' ? h.tempC : h.tempF));
+  const minTemp = Math.min(...temps);
+  const maxTemp = Math.max(...temps);
+  const range = maxTemp - minTemp || 1;
+
   return (
-    <div className="rounded-3xl border border-neutral-200/90 bg-white/70 p-6 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/50">
-      <div className="flex items-center justify-between pb-4">
-        <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-cyan-500" />
-          <h2 className="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-            Hourly Trajectory (Next 24h)
-          </h2>
-        </div>
-        <span className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500">
-          Scrollable Timeline
+    <div className="rounded-3xl border border-neutral-200/90 bg-white/70 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/50">
+      {/* ── Header ── */}
+      <div className="flex items-center gap-2 px-5 pt-5 pb-4">
+        <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-cyan-500/10 dark:bg-cyan-500/15">
+          <svg
+            className="h-3.5 w-3.5 text-cyan-500"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
         </span>
+        <h2 className="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+          Next 24 Hours
+        </h2>
       </div>
 
-      <div className="flex gap-3 overflow-x-auto pb-2 pt-1 scrollbar-none">
-        {hourly.map((h, i) => {
-          const temp = unit === 'C' ? h.tempC : h.tempF;
-          return (
-            <div
-              key={`${h.time}-${i}`}
-              className="flex min-w-[80px] flex-col items-center justify-between rounded-2xl border border-neutral-200/60 bg-neutral-50/70 p-3 text-center transition-all hover:border-neutral-300 dark:border-neutral-800/60 dark:bg-neutral-800/30 dark:hover:border-neutral-700"
-            >
-              <span className="font-mono text-xs text-neutral-500 dark:text-neutral-400">
-                {i === 0 ? 'Now' : h.displayTime}
-              </span>
+      {/* ── Scroll container with edge fades ── */}
+      <div className="relative">
+        {/* Left fade */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-white/80 dark:from-neutral-900/70 to-transparent rounded-bl-3xl" />
+        {/* Right fade */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-white/90 dark:from-neutral-900/80 to-transparent rounded-br-3xl" />
 
-              <div className="my-2.5">
-                {getWeatherIcon(h.icon, h.condition, 'h-6 w-6')}
-              </div>
+        <div
+          ref={scrollRef}
+          className="flex gap-2.5 overflow-x-auto px-5 pb-5 pt-1 scrollbar-none scroll-smooth snap-x snap-mandatory"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          {hourly.map((h, i) => {
+            const temp = unit === 'C' ? h.tempC : h.tempF;
+            const isNow = i === 0;
+            const warmth = (temp - minTemp) / range; // 0–1
 
-              <span className="font-mono text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                {Math.round(temp)}°
-              </span>
+            return (
+              <div
+                key={`${h.time}-${i}`}
+                className={[
+                  /* Mobile: 72px wide, snap item, tall card */
+                  'relative flex shrink-0 snap-start flex-col items-center',
+                  'w-[72px] sm:w-[80px] lg:w-[88px]',
+                  'rounded-2xl px-2 py-3.5',
+                  'transition-all duration-200',
+                  /* "Now" card — accent highlight */
+                  isNow
+                    ? 'border border-cyan-400/50 bg-gradient-to-b from-cyan-500/15 to-cyan-500/5 shadow-sm shadow-cyan-500/10 dark:border-cyan-500/40 dark:from-cyan-500/20 dark:to-cyan-500/8'
+                    : 'border border-neutral-200/60 bg-neutral-50/60 dark:border-neutral-800/50 dark:bg-neutral-800/25',
+                ].join(' ')}
+              >
+                {/* "Now" badge */}
+                {isNow && (
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-cyan-500 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white shadow-sm">
+                    Now
+                  </span>
+                )}
 
-              {h.pop > 0 ? (
-                <div className="mt-1 flex items-center gap-0.5 text-[10px] font-medium text-cyan-600 dark:text-cyan-400">
-                  <Droplets className="h-2.5 w-2.5" />
-                  <span>{h.pop}%</span>
+                {/* Time */}
+                <span
+                  className={[
+                    'mb-2.5 mt-1 font-mono text-[11px] leading-none',
+                    isNow
+                      ? 'font-semibold text-cyan-600 dark:text-cyan-400'
+                      : 'text-neutral-400 dark:text-neutral-500',
+                  ].join(' ')}
+                >
+                  {isNow ? '—' : h.displayTime}
+                </span>
+
+                {/* Weather icon */}
+                <div className="mb-3 flex items-center justify-center">
+                  {getWeatherIcon(h.icon, h.condition, 'h-7 w-7 sm:h-8 sm:w-8')}
                 </div>
-              ) : (
-                <div className="mt-1 h-3 text-[10px] text-neutral-400 opacity-0">-</div>
-              )}
-            </div>
-          );
-        })}
+
+                {/* Temperature — the star of the show */}
+                <span
+                  className={[
+                    'mb-3 font-mono text-base font-bold leading-none tracking-tight sm:text-lg',
+                    isNow
+                      ? 'text-cyan-700 dark:text-cyan-300'
+                      : 'text-neutral-900 dark:text-neutral-100',
+                  ].join(' ')}
+                >
+                  {Math.round(temp)}°
+                </span>
+
+                {/* Relative warmth bar */}
+                <div className="mb-2.5 h-1 w-10 overflow-hidden rounded-full bg-neutral-200/80 dark:bg-neutral-700/60">
+                  <div
+                    className={[
+                      'h-full rounded-full',
+                      warmth > 0.6
+                        ? 'bg-amber-400'
+                        : warmth > 0.3
+                          ? 'bg-cyan-400'
+                          : 'bg-sky-300',
+                    ].join(' ')}
+                    style={{ width: `${Math.max(15, warmth * 100)}%` }}
+                  />
+                </div>
+
+                {/* Precipitation */}
+                {h.pop > 0 ? (
+                  <div
+                    className={[
+                      'flex items-center gap-0.5 text-[10px] font-semibold leading-none',
+                      h.pop >= 50
+                        ? 'text-blue-500 dark:text-blue-400'
+                        : 'text-cyan-500 dark:text-cyan-400',
+                    ].join(' ')}
+                  >
+                    <Droplets className="h-2.5 w-2.5 shrink-0" />
+                    <span className="font-mono">{h.pop}%</span>
+                  </div>
+                ) : (
+                  /* Spacer so cards without rain are same height */
+                  <div className="h-3.5" />
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
