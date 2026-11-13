@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  :root:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+  :root:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+
+  /* Prevent page scroll chained to backdrop on modal dialogs */
+  dialog:modal {
+    overscroll-behavior: contain;
+  }
+  dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+/* Touch targets enforcement */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.45);
+}

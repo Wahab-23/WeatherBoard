@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#090a0f" />
+    <meta name="description" content="Precision Meteorological Dashboard with automatic fallback engine and offline capability." />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <title>WeatherBoard — Precision Meteorological Dashboard</title>
+
+    <!-- FOUC prevention script following modern-web-guidance -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('weatherboard_theme');
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored ? stored : (systemDark ? 'dark' : 'light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            var meta = document.querySelector('meta[name="color-scheme"]');
+            if (meta) meta.content = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            var meta = document.querySelector('meta[name="color-scheme"]');
+            if (meta) meta.content = 'light';
+          }
+        } catch (e) {
+          // Graceful degradation when storage is blocked
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-[#090b10] dark:text-neutral-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-400 min-h-screen overflow-x-hidden font-sans">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
