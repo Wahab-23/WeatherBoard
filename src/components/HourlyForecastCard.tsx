@@ -11,7 +11,7 @@ interface HourlyForecastCardProps {
 export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, unit }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  /* Find the temperature range to draw the relative warmth bar */
+  /* Temperature range for relative warmth bar */
   const temps = hourly.map(h => (unit === 'C' ? h.tempC : h.tempF));
   const minTemp = Math.min(...temps);
   const maxTemp = Math.max(...temps);
@@ -19,6 +19,7 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
 
   return (
     <div className="rounded-3xl border border-neutral-200/90 bg-white/70 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/50">
+
       {/* ── Header ── */}
       <div className="flex items-center gap-2 px-5 pt-5 pb-4">
         <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-cyan-500/10 dark:bg-cyan-500/15">
@@ -40,16 +41,30 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
         </h2>
       </div>
 
-      {/* ── Scroll container with edge fades ── */}
+      {/* ── Scroll shell with edge fades ── */}
       <div className="relative">
-        {/* Left fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-white/80 dark:from-neutral-900/70 to-transparent rounded-bl-3xl" />
+        {/* Left fade — mobile only (on sm+ the grid fills the full width) */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-white/80 to-transparent dark:from-neutral-900/70 sm:hidden" />
         {/* Right fade */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-white/90 dark:from-neutral-900/80 to-transparent rounded-br-3xl" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-white/90 to-transparent dark:from-neutral-900/80 sm:hidden" />
 
+        {/*
+          ── Layout strategy ──────────────────────────────────────────────
+          Mobile  (< sm):  flex row  → 1 row, horizontal scroll, snap
+          Tablet+ (≥ sm):  CSS grid  → 2 rows, grid-auto-flow: column,
+                           items fill columns left-to-right, row 1 then row 2
+          ────────────────────────────────────────────────────────────────
+        */}
         <div
           ref={scrollRef}
-          className="flex gap-2.5 overflow-x-auto px-5 pb-5 pt-1 scrollbar-none scroll-smooth snap-x snap-mandatory"
+          className={[
+            /* shared */
+            'overflow-x-auto px-5 pb-5 pt-1 scrollbar-none',
+            /* mobile: single flex row + snap */
+            'flex gap-2.5 scroll-smooth snap-x snap-mandatory',
+            /* tablet+: 2-row CSS grid, column flow */
+            'sm:grid sm:grid-rows-2 sm:[grid-auto-flow:column] sm:gap-2 sm:snap-none',
+          ].join(' ')}
           style={{ WebkitOverflowScrolling: 'touch' }}
         >
           {hourly.map((h, i) => {
@@ -61,12 +76,13 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
               <div
                 key={`${h.time}-${i}`}
                 className={[
-                  /* Mobile: 72px wide, snap item, tall card */
+                  /* Base — mobile: snap item, fixed width */
                   'relative flex shrink-0 snap-start flex-col items-center',
-                  'w-[72px] sm:w-[80px] lg:w-[88px]',
-                  'rounded-2xl px-2 py-3.5',
+                  /* Width: wider on larger screens; on tablet+ auto-cols fills space */
+                  'w-[72px] sm:w-auto sm:min-w-[72px]',
+                  'rounded-2xl px-2 py-3 sm:py-3.5',
                   'transition-all duration-200',
-                  /* "Now" card — accent highlight */
+                  /* "Now" card accent */
                   isNow
                     ? 'border border-cyan-400/50 bg-gradient-to-b from-cyan-500/15 to-cyan-500/5 shadow-sm shadow-cyan-500/10 dark:border-cyan-500/40 dark:from-cyan-500/20 dark:to-cyan-500/8'
                     : 'border border-neutral-200/60 bg-neutral-50/60 dark:border-neutral-800/50 dark:bg-neutral-800/25',
@@ -82,7 +98,7 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
                 {/* Time */}
                 <span
                   className={[
-                    'mb-2.5 mt-1 font-mono text-[11px] leading-none',
+                    'mb-2 mt-1 font-mono text-[11px] leading-none',
                     isNow
                       ? 'font-semibold text-cyan-600 dark:text-cyan-400'
                       : 'text-neutral-400 dark:text-neutral-500',
@@ -92,14 +108,14 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
                 </span>
 
                 {/* Weather icon */}
-                <div className="mb-3 flex items-center justify-center">
-                  {getWeatherIcon(h.icon, h.condition, 'h-7 w-7 sm:h-8 sm:w-8')}
+                <div className="mb-2.5 flex items-center justify-center">
+                  {getWeatherIcon(h.icon, h.condition, 'h-6 w-6 sm:h-7 sm:w-7')}
                 </div>
 
-                {/* Temperature — the star of the show */}
+                {/* Temperature */}
                 <span
                   className={[
-                    'mb-3 font-mono text-base font-bold leading-none tracking-tight sm:text-lg',
+                    'mb-2.5 font-mono text-[15px] font-bold leading-none tracking-tight sm:text-base',
                     isNow
                       ? 'text-cyan-700 dark:text-cyan-300'
                       : 'text-neutral-900 dark:text-neutral-100',
@@ -109,7 +125,7 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
                 </span>
 
                 {/* Relative warmth bar */}
-                <div className="mb-2.5 h-1 w-10 overflow-hidden rounded-full bg-neutral-200/80 dark:bg-neutral-700/60">
+                <div className="mb-2 h-1 w-9 overflow-hidden rounded-full bg-neutral-200/80 dark:bg-neutral-700/60">
                   <div
                     className={[
                       'h-full rounded-full',
@@ -137,7 +153,6 @@ export const HourlyForecastCard: React.FC<HourlyForecastCardProps> = ({ hourly, 
                     <span className="font-mono">{h.pop}%</span>
                   </div>
                 ) : (
-                  /* Spacer so cards without rain are same height */
                   <div className="h-3.5" />
                 )}
               </div>
