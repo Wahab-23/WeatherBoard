@@ -71,7 +71,7 @@ export const RemoveCityDialog: React.FC<RemoveCityDialogProps> = ({
         <button
           type="button"
           onClick={onCancel}
-          className="touch-target rounded-lg p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+          className="touch-target inline-flex justify-center rounded-lg p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
           aria-label="Close dialog"
         >
           <X className="h-4 w-4" />
