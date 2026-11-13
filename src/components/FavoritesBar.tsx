@@ -103,3 +103,4 @@ export const FavoritesBar: React.FC<FavoritesBarProps> = ({
     </nav>
   );
 };
+

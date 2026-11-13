@@ -117,3 +117,4 @@ export async function searchCities(
 
   return { cities: mapped, source: 'open-meteo' };
 }
+

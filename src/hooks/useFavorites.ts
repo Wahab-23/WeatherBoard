@@ -111,3 +111,4 @@ export function useFavorites() {
     maxFavorites: MAX_FAVORITES,
   };
 }
+

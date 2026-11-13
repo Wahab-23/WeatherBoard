@@ -30,3 +30,4 @@ export function getWeatherIcon(_iconKey: string, condition: string, className = 
   }
   return <Sun className={`${className} text-amber-400`} />;
 }
+

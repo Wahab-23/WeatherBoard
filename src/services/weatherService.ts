@@ -418,3 +418,4 @@ export function saveCachedWeather(data: WeatherData): void {
 export function getCachedWeather(): WeatherData | null {
   return safeStorage.getJSON<WeatherData | null>(LAST_WEATHER_STORAGE_KEY, null);
 }
+

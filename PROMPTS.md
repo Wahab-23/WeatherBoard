@@ -71,3 +71,21 @@ Phase 5: Testing, Deployment & Submission (45 Mins)
 - Build Linear/Mercury aesthetic: monochromatic neutrals, refined borders (`border-neutral-200 dark:border-neutral-800`), backdrop blurs, crisp status badges, zero horizontal overflow across 375px, 768px, 1280px.
 - Implement robust custom Service Worker (`sw.ts`) with `injectManifest`, caching app shell and last weather payload in IndexedDB/CacheStorage, displaying an active Offline Mode banner.
 - Build notification pre-permission card, graceful permission states (granted/denied/unsupported), time selector, and background reminder checks.
+
+---
+
+### Prompt 2: Fix Dark Mode Toggle in Tailwind CSS v4
+**User Prompt:**
+```text
+Dark mode toggle not working.
+```
+
+**Antigravity Root Cause Analysis & Resolution:**
+- **Root Cause:** In Tailwind CSS v4, the default `@import "tailwindcss";` compiles the `dark:` variant using `@media (prefers-color-scheme: dark)`. Even though JavaScript was correctly toggling the `dark` class on `document.documentElement` (`<html class="dark">`) and updating `<meta name="color-scheme">`, Tailwind v4 ignored the class name because it was bound strictly to the operating system's media query.
+- **Resolution:**
+  - Added `@custom-variant dark (&:where(.dark, .dark *));` to `src/index.css`.
+  - Recompiled CSS; confirmed that `dark:` utilities now target `:where(.dark, .dark *)` and respond immediately to class toggles.
+  - Created and executed automated browser verification (`scripts/test-dark-mode.js`) with Puppeteer:
+    - Click 1: Body switched from `rgb(9, 11, 16)` (dark) to `oklch(0.985 0 none)` (light); `html.className` cleared.
+    - Click 2: Body switched back to `rgb(9, 11, 16)` (dark); `html.className` restored to `dark`.
+    - Settings Modal: Tested 3-state radio controls ("Light", "Dark", "Auto"); confirmed DOM styles update in real-time.

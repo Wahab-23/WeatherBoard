@@ -66,3 +66,4 @@ export const SkeletonLoader: React.FC = () => {
     </div>
   );
 };
+

@@ -50,3 +50,4 @@ export const OfflineBanner: React.FC<OfflineBannerProps> = ({
     </aside>
   );
 };
+
