@@ -89,3 +89,31 @@ Dark mode toggle not working.
     - Click 1: Body switched from `rgb(9, 11, 16)` (dark) to `oklch(0.985 0 none)` (light); `html.className` cleared.
     - Click 2: Body switched back to `rgb(9, 11, 16)` (dark); `html.className` restored to `dark`.
     - Settings Modal: Tested 3-state radio controls ("Light", "Dark", "Auto"); confirmed DOM styles update in real-time.
+
+
+---
+
+### Prompt 3: Redesign HourlyForecastCard — Senior Product Designer, Mobile-First
+**User Prompt:**
+```text
+@HourlyForecastCard.tsx:L26-L57 Can check as senior product design this doesn't look good — design it mobile first then tab and large screen.
+```
+
+**Antigravity Design Critique & Resolution:**
+- **Problems identified (lines 26–57):**
+  - Cards were uniform flat boxes with no visual hierarchy — time, icon, temp, and pop were equal weight
+  - `min-w-20` caused cramped layout on 375px; `gap-3` with no snap alignment made swipe feel chaotic
+  - "Now" item used identical styling to all other items — zero distinction for the current hour
+  - Precipitation (`Droplets` icon + %) was 10px with no weight — invisible at a glance
+  - No scroll-edge fade to hint that content extends beyond the viewport
+  - "Scrollable Timeline" label was redundant placeholder copy
+  - No relative warmth visualization — all temps felt equal regardless of value
+- **Redesign decisions (mobile-first, 72px → 80px → 88px across breakpoints):**
+  - **Now badge:** Absolute-positioned cyan pill floating above the first card — unmissable at a glance
+  - **Card accent:** `from-cyan-500/15 to-cyan-500/5` gradient + `border-cyan-400/50 shadow-cyan-500/10` for the Now card; plain neutral for all others
+  - **Typography hierarchy:** Time (11px mono muted) → Icon (28–32px) → Temp (bold 16–18px tracking-tight) → Warmth bar → Precipitation (blue-500 ≥50%, cyan-500 otherwise)
+  - **Relative warmth bar:** 1px pill below each temp; width is `(temp − min) / (max − min)` × 100%; colour shifts amber → cyan → sky-blue
+  - **Scroll snap:** `snap-x snap-mandatory` on container, `snap-start` on each card — natural swipe on iOS
+  - **Edge fades:** Left/right gradient overlays over the scroll region — scroll affordance without indicators
+  - **Height consistency:** Cards without rain get an explicit `h-3.5` spacer so all cards are the same height
+  - **Responsive widths:** `w-[72px] sm:w-[80px] lg:w-[88px]` — no layout shift, no overflow
